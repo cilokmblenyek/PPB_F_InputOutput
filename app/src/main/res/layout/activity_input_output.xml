@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Button to Add Mahasiswa -->
+    <Button
+        android:id="@+id/buttonAddMahasiswa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Mahasiswa"
+        android:layout_gravity="center"
+        android:layout_marginTop="160dp"/>
+
+    <EditText
+        android:id="@+id/editTextSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search Mahasiswa"
+        android:inputType="text"
+        android:layout_marginBottom="8dp" />
+
+    <!-- ListView to display Mahasiswa -->
+    <ListView
+        android:id="@+id/listViewHasil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Update Button -->
+    <Button
+        android:id="@+id/buttonUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Delete Button -->
+    <Button
+        android:id="@+id/buttonDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>

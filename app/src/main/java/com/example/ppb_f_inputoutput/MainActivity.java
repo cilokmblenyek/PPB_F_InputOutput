@@ -1,10 +1,10 @@
 package com.example.ppb_f_inputoutput;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,26 +15,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Inisialisasi elemen UI
-        EditText inputNama = findViewById(R.id.inputNama);
-        EditText inputNim = findViewById(R.id.inputNim);
-        Button buttonSubmit = findViewById(R.id.buttonSubmit);
-        TextView textHasil = findViewById(R.id.textHasil);
+        Button buttonInputOutput = findViewById(R.id.buttonInputOutput);
+        Button buttonToast = findViewById(R.id.buttonToast);
 
-        // Set event listener pada tombol
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+        // Set event listener pada tombol Input Output
+        buttonInputOutput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Ambil input dari EditText
-                String nama = inputNama.getText().toString().trim();
-                String nim = inputNim.getText().toString().trim();
+                // Pindah ke InputOutputActivity
+                Intent intent = new Intent(MainActivity.this, InputOutputActivity.class);
+                startActivity(intent);
+            }
+        });
 
-                // Periksa apakah input kosong
-                if (nama.isEmpty() || nim.isEmpty()) {
-                    textHasil.setText("Mohon isi Nama dan NIM!");
-                } else {
-                    // Tampilkan hasil di TextView
-                    textHasil.setText("Nama: " + nama + "\nNIM: " + nim);
-                }
+        // Set event listener pada tombol Toast
+        buttonToast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tampilkan Toast
+                Toast.makeText(MainActivity.this, "Halo Senopati!", Toast.LENGTH_SHORT).show();
             }
         });
     }

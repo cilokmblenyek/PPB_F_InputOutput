@@ -15,5 +15,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".InputOutputActivity"
+            android:exported="true">
+        </activity>
+
     </application>
 </manifest>
