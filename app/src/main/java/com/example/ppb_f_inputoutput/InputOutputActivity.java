@@ -19,7 +19,7 @@ public class InputOutputActivity extends AppCompatActivity {
     private ListView listViewHasil;
     private MahasiswaAdapter adapter;
     private ArrayList<mahasiswa> mahasiswaList;
-    private ArrayList<mahasiswa> filteredList; // Define filteredList
+    private ArrayList<mahasiswa> filteredList;
     private int selectedIndex = -1;
 
     @Override
@@ -27,23 +27,25 @@ public class InputOutputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_output);
 
-        // Initialize UI
+        // Initialize UI components
         editTextSearch = findViewById(R.id.editTextSearch);
         buttonAddMahasiswa = findViewById(R.id.buttonAddMahasiswa);
         buttonUpdate = findViewById(R.id.buttonUpdate);
         buttonDelete = findViewById(R.id.buttonDelete);
         listViewHasil = findViewById(R.id.listViewHasil);
 
-        // Initialize Data
+        // Initialize data lists
         mahasiswaList = new ArrayList<>();
-        filteredList = new ArrayList<>(mahasiswaList); // Initialize filteredList
+        filteredList = new ArrayList<>(mahasiswaList);
+
+        // Initialize and set the adapter
         adapter = new MahasiswaAdapter(this, filteredList);
         listViewHasil.setAdapter(adapter);
 
         // Add Mahasiswa Button
         buttonAddMahasiswa.setOnClickListener(v -> showAddDialog());
 
-        // Search Functionality
+        // Search functionality
         editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -57,11 +59,9 @@ public class InputOutputActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-        // ListView Item Click (Select)
+        // ListView item click listener
         listViewHasil.setOnItemClickListener((parent, view, position, id) -> {
-            mahasiswa selectedMahasiswa = mahasiswaList.get(position);
             selectedIndex = position;
-
             buttonUpdate.setVisibility(View.VISIBLE);
             buttonDelete.setVisibility(View.VISIBLE);
             buttonAddMahasiswa.setVisibility(View.GONE);
@@ -70,7 +70,7 @@ public class InputOutputActivity extends AppCompatActivity {
         // Update Button
         buttonUpdate.setOnClickListener(v -> {
             if (selectedIndex != -1) {
-                showUpdateDialog();
+                showUpdateDialog(selectedIndex);
             }
         });
 
@@ -78,15 +78,15 @@ public class InputOutputActivity extends AppCompatActivity {
         buttonDelete.setOnClickListener(v -> {
             if (selectedIndex != -1) {
                 mahasiswaList.remove(selectedIndex);
-                adapter.notifyDataSetChanged();
+                filterList(editTextSearch.getText().toString());
                 resetForm();
             }
         });
 
-        // Long Click on ListView Item
+        // Long click to delete
         listViewHasil.setOnItemLongClickListener((parent, view, position, id) -> {
             mahasiswaList.remove(position);
-            adapter.notifyDataSetChanged();
+            filterList(editTextSearch.getText().toString());
             resetForm();
             return true;
         });
@@ -106,7 +106,7 @@ public class InputOutputActivity extends AppCompatActivity {
 
                     if (!nama.isEmpty() && !nim.isEmpty()) {
                         mahasiswaList.add(new mahasiswa(nama, nim));
-                        filterList(editTextSearch.getText().toString()); // Update filtered list
+                        filterList(editTextSearch.getText().toString());
                         Toast.makeText(this, "Mahasiswa berhasil ditambahkan!", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(this, "Nama dan NIM harus diisi!", Toast.LENGTH_SHORT).show();
@@ -116,12 +116,12 @@ public class InputOutputActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void showUpdateDialog() {
+    public void showUpdateDialog(int position) {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_mahasiswa, null);
         EditText dialogInputNama = dialogView.findViewById(R.id.dialogInputNama);
         EditText dialogInputNim = dialogView.findViewById(R.id.dialogInputNim);
 
-        mahasiswa selectedMahasiswa = mahasiswaList.get(selectedIndex);
+        mahasiswa selectedMahasiswa = mahasiswaList.get(position); // Correct usage
         dialogInputNama.setText(selectedMahasiswa.getNama());
         dialogInputNim.setText(selectedMahasiswa.getNrp());
 
@@ -135,7 +135,7 @@ public class InputOutputActivity extends AppCompatActivity {
                     if (!newNama.isEmpty() && !newNim.isEmpty()) {
                         selectedMahasiswa.setNama(newNama);
                         selectedMahasiswa.setNrp(newNim);
-                        filterList(editTextSearch.getText().toString()); // Update filtered list
+                        filterList(editTextSearch.getText().toString());
                         Toast.makeText(this, "Mahasiswa berhasil diperbarui!", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(this, "Nama dan NIM harus diisi!", Toast.LENGTH_SHORT).show();
@@ -165,5 +165,11 @@ public class InputOutputActivity extends AppCompatActivity {
         buttonUpdate.setVisibility(View.GONE);
         buttonDelete.setVisibility(View.GONE);
         buttonAddMahasiswa.setVisibility(View.VISIBLE);
+    }
+
+    public void deleteMahasiswa(int position) {
+        mahasiswaList.remove(position);
+        filterList(editTextSearch.getText().toString());
+        Toast.makeText(this, "Mahasiswa berhasil dihapus!", Toast.LENGTH_SHORT).show();
     }
 }
