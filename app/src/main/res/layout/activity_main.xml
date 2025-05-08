@@ -21,4 +21,20 @@
         android:layout_height="wrap_content"
         android:text="Salam ke Senopati!"
         android:layout_gravity="center"/>
+
+    <!-- Tombol Intent -->
+    <Button
+        android:id="@+id/buttonIntent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buka Intent!"
+        android:layout_gravity="center"/>
+
+    <!-- Tombol Maps -->
+    <Button
+        android:id="@+id/buttonMaps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buka Gmaps!"
+        android:layout_gravity="center"/>
 </LinearLayout>
